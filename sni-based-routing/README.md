@@ -35,6 +35,6 @@ curl  -X POST localhost:8001/services/example-svc/routes \
 curl -kv --resolve example.com:8443:127.0.0.1 https://example.com:8443
 
 
-curl -kv --resolve httpbin.org:8443:127.0.0.1 https://httpbin.org:8443
+curl -kv --resolve httpbin.org:8443:127.0.0.1 https://httpbin.org:8443/anything
 ```
 
