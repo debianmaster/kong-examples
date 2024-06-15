@@ -14,7 +14,7 @@ curl -Ls https://get.konghq.com/quickstart | PROXY_PORT=80 bash -s --  -t 3.4 -m
     -e "KONG_ADMIN_GUI_AUTH=basic-auth" \
     -e KONG_ENFORCE_RBAC="on" \
     -e KONG_LICENSE_DATA \
-    -e "KONG_ADMIN_GUI_SESSION_CONF={\"secret\":\"Y29vbGJlYW5z\",\"cookie_samesite\":\"off\",\"cookie_domain\": \".kong.zelarsoft.com\"}" \
+    -e "KONG_ADMIN_GUI_SESSION_CONF={\"secret\":\"Y29vbGJlYW5z\",\"cookie_samesite\":\"Lax\",\"cookie_same_site\":\"Lax\",\"cookie_domain\": \".kong.zelarsoft.com\",\"cookie_secure\": false}" \
     -e KONG_PORTAL_SESSION_CONF='{"cookie_name": "portal_session", "secret": "PORTAL_SUPER_SECRET", "storage": "kong", "cookie_secure": false, "cookie_domain":".kong.zelarsoft.com"}'
     
 
@@ -26,4 +26,13 @@ curl -X POST localhost:8001/services/admin/routes -d hosts=admin.kong.zelarsoft.
 curl -X POST localhost:8001/services/manager/routes -d hosts=manager.kong.zelarsoft.com -H "Kong-Admin-Token: changeme"
 curl -X POST localhost:8001/services/portal/routes -d hosts=portal.kong.zelarsoft.com -H "Kong-Admin-Token: changeme"
 curl -X POST localhost:8001/services/portalapi/routes -d hosts=portalapi.kong.zelarsoft.com -H "Kong-Admin-Token: changeme"
+
+
+curl -X POST localhost:8001/services \
+  --data name=admin-api \
+  --data host=127.0.0.1 \
+  --data port=8001 -H "Kong-Admin-Token: changeme"
+
+curl -X POST localhost:8001/services/admin-api/routes \
+  --data paths[]=/admin-api -H "Kong-Admin-Token: changeme"
 ```
